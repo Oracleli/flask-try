@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <dl>
+        <dt>Title:
+        <dd><input type=text size=30 name=title>
+        <dt>Text:
+        <dd><textarea name=text rows=5 cols=40></textarea>
+        <dd><input type=submit value=Share>
+      </dl>
+    </form>
+	
+	
+    {% if entries[0] %}
+	
+	<form action="{{ url_for('del_favorite') }}" method=post class=add-entry>
+      <dl>
+        <dt>Press to delete:
+        <dd><input type=submit value=delete.all>
+      </dl>
+    
+
+  
+  {% for entry in entries %}
+  
+  
+	
+  {% if  ".jpg" in entry.text %}
+  <li><h2>{{ entry.title }}</h2>
+
+        <dd align="right"><input type="checkbox" name="deletelist" value={{entry.id}}  >delete<br>  </dd>
+    
+  <img src={{ entry.text|safe }} style="width:304px;">
+  {% elif ".png" in entry.text%}
+  <li><h2>{{ entry.title }}</h2>
+
+        <dd align="right"><input type="checkbox" name="deletelist" value={{entry.id}} >delete<br>  </dd>
+    
+  <img src={{ entry.text|safe }} style="width:304px;">
+  {% else %}
+    <li><h2>{{ entry.title }}</h2>
+
+        <dd align="right"><input type="checkbox" name="deletelist" value={{entry.id}} >delete<br>  </dd>
+    
+	{{ entry.text|safe }}
+	
+
+	 {% endif %}
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+	
+  {% endfor %}
+  </ul>
+    </form>
+  {% endif %}
+  {% endif %}
+{% endblock %}
